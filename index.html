@@ -260,7 +260,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-30T20:39:47+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-30T21:04:10+08:00">
                 2018-08-30
               </time>
             
@@ -300,107 +300,7 @@
       
         
           
-            <p>#JMeter对各种类型接口的测试<br>默认做接口测试前，已经给出明确的接口文档（如，<a href="http://test.nnzhp.cn/wiki/index.php?doc-view-59）；本地配好了JMeter" target="_blank" rel="noopener">http://test.nnzhp.cn/wiki/index.php?doc-view-59）；本地配好了JMeter</a> 3.x的运行环境；</p>
-<p>打开JMeter，添加一个线程组和该线程组的查看结果树。以下的几种接口请求我们都在这个线程组中添加和运行。</p>
-<p>如果你的JMeter返回数据是乱码，解决办法是，在JMeter安装路径的bin目录下，打开文件jmeter.properties，把Sampleresult.default.encoding的值改为 utf-8 即可。</p>
-<ol>
-<li>普通的以key-value传参的get请求</li>
-</ol>
-<p>e.g. 获取用户信息</p>
-<p>添加http请求；填写服务器域名或IP；方法选GET；填写路径；添加参数；运行并查看结果。</p>
-<ol start="2">
-<li>以Json串传参的post请求</li>
-</ol>
-<p>e.g. 获取用户余额</p>
-<p>添加http请求；填写服务器域名或IP；方法选POST；填写路径；在参数区域选Body Data标签；写入Json串参数，注意Json格式；运行并查看结果。</p>
-<p> *注意：</p>
-<p>Json传参时，往往参数相对复杂，规模较大，很多时候是Json串再嵌套Json串，在写入body的时候如果哪里格式不对会影响传参，而JMeter本身是不能对Json进行格式校验的（Postman可以进行简单的Json校验），我们可以借助这个网站来校验你的Json串的格式，<a href="http://www.bejson.com" target="_blank" rel="noopener">www.bejson.com</a> 再把确保格式正确的Json串填入body。</p>
-<ol start="3">
-<li>请求时需要http权限验证</li>
-</ol>
-<p>e.g. 修改用户余额</p>
-<p>添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p>
-<p>添加授权管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP授权管理器；</p>
-<p>打开HTTP授权管理器，在基础URL添加路径；填写用户名、密码（接口文档会给出）；添加域即请求的服务器域名或IP；其他默认；</p>
-<p>运行请求并查看结果。（该接口暂时有问题请求返回500，只要掌握需要权限验证的接口如何做就好）</p>
-<ol start="4">
-<li>请求时需要添加请求标头</li>
-</ol>
-<p>e.g. 获取用户信息2</p>
-<p>添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p>
-<p>添加HTTP信息头管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP信息头管理器；</p>
-<p>打开HTTP信息头管理器，参照接口文档填写好header信息；</p>
-<p>运行请求并查看结果。</p>
-<ol start="5">
-<li>请求时需要添加Cookie</li>
-</ol>
-<p>e.g. 修改用户余额2</p>
-<p>添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p>
-<p>添加HTTP Cookie管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP Cookie管理器；</p>
-<p>打开Cookie管理器，参照接口文档填写好Cookie信息；</p>
-<p> 发送请求并查看结果。</p>
-<ol start="6">
-<li><p>请求通过某个接口上传文件</p>
-<p>e.g.上传文件</p>
-<p>添加http请求；填写服务器域名或IP；方法选POST；填写路径；在参数区域选Files Upload标签，添加文件全名（包含绝对路径，也可以点击浏览按钮添加），写入参数名；发送请求并查看结果。</p>
-</li>
-</ol>
-<p>JMeter的参数化</p>
-<ol>
-<li>指定参数值</li>
-</ol>
-<p>这种方法常用来解决线程组中多个请求共用相同的数据，比如我们以上所有请求都有相同的IP地址，当地址改变时可以一改全改。</p>
-<p>添加用户定义的变量，右击线程组-&gt;添加-&gt;配置元件-&gt;用户定义的变量；</p>
-<p>打开用户定义的变量，添加变量，写好名称和值；</p>
-<p>脚本中用到该值的所有地方都可以引用这个变量名了，引用变量的格式为 ${变量名}；</p>
-<ol start="2">
-<li>借助函数生成参数</li>
-</ol>
-<p>测试过程中，有时候数据不适合被指定，可选择借助函数来生成，以下是最常用的几种。</p>
-<pre><code>     用函数生成随机数：（__Random）
-</code></pre><p>在Jmeter中点击 选项-&gt;函数助手对话框；</p>
-<p>在弹出的对话框中选__Random，填写随机数的范围，点击生成按钮，就看到你需要的字符串了；</p>
-<p>尝试在请求中使用生成的随机数，把刚拷贝的字符串粘贴到请求的参数里；</p>
-<p>发送请求，查看请求中参数值的情况，参数生效了。</p>
-<pre><code>    用函数生成当前时间：（__time）
-
-
-
-
-
-    用函数生成通用的唯一识别码：（__UUID）
-</code></pre><ol start="3">
-<li>文件传参</li>
-</ol>
-<p>用于读取在文件中维护的参数，如参数文件内容如下；</p>
-<p>注意，Jmeter读取文件总的参数是从第一行就开始了的，千万不要犯下面的错误。</p>
-<p>在Jmeter中右击线程组-&gt;添加-&gt;配置元件-&gt;CSV Data Set Config；</p>
-<p>打开设置窗口，写入参数文件的全名（含绝对路径），变量名，Delimiter就用默认的逗号，表示在准备参数文件时参数表的列之间用逗号隔开；</p>
-<p>在请求中引用参数时应该是酱紫的：${username}  ${pwd}，用它们来顶替对应的参数值。</p>
-<ol start="4">
-<li>关联传参</li>
-</ol>
-<p>在线程组内，当你想用一个请求的响应结果作为另一个请求的入参时就需要用到关联。</p>
-<pre><code>用正则表达式关联
-</code></pre><p>思路是先从某个请求的响应数据中提取你需要的值，在把这个值在另一个请求中入参，操作如下：</p>
-<p>在需要被提取响应数据的请求下添加正则表达式提取器，右击添加-&gt;后置处理器-&gt;正则表达式提取器；</p>
-<p>在正则表达式提取器中填写 引用名称，不说也知道用途；正则表达式，最简单的办法是在响应数据中把要提取的目标值左右若干字符包含目标值的一行拷贝出来，粘贴到正则表达式框内，在把目标值用一对小括号替换，括号里用添上合适的匹配符本例如(.*)； 注意在响应数据中拷贝时尽量避开需要转义的字符如果不能避开，请转义；模板通常固定填$1$；匹配数字1代表区匹配的第一个值；缺省值是在匹配失败时取得的值，通常用来检查匹配是否成功；</p>
-<p>用${age}入参给另一个请求，查看结果传参成功。</p>
-<pre><code>用Json Path Extractor 插件关联
-</code></pre><p>只针对Json格式的Response 取值，右击请求添加-&gt;后置处理器-&gt;JSON Path Extractor；</p>
-<p>在JSON Path Extractor中填入引用名和JSONPath Expression；</p>
-<p>在另一个请求中入参，也和上面的结果一样转参成功。</p>
-<p>注意，JSON Path Extractor这个插件只能在Jmeter3.x以上的版本安装。</p>
-<p>Jmeter添加断言检查结果</p>
-<p>右击请求添加-&gt;断言-&gt;响应断言；</p>
-<p>添加并写入希望在响应结果中看到的内容；</p>
-<p>发送请求，查看结果；</p>
-<p> Jmeter操作Mysql</p>
-<p>测试计划添加.jar包 mysql-connector-java-5.1.7-bin.jar用于使Jmeter可以读取Mysql；</p>
-<p> 线程组添加 JDBC Connection Configuration （添加-&gt;配置元件-&gt; JDBC Connection Configuration）用于配置Jmeter和Mysql的连接；</p>
-<p>JDBC Driver class是固定的，Jmeter操作各类数据的Driver参考下图；</p>
-<p>线程组添加JDBC Request（添加-&gt;Sampler-&gt; JDBC Request） 用于写sql来操作Mysql；</p>
-<p>发送请求，成功访问Msql。</p>
+            <p align="left"><strong style="line-height: 1.5">JMeter对各种类型接口的测试</strong></p><br><p align="left">默认做接口测试前，已经给出明确的接口文档（如，<a href="http://test.nnzhp.cn/wiki/index.php?doc-view-59" target="_blank" rel="noopener">http://test.nnzhp.cn/wiki/index.php?doc-view-59</a>）；本地配好了JMeter 3.x的运行环境；</p><br><p align="left">打开JMeter，添加一个线程组和该线程组的查看结果树。以下的几种接口请求我们都在这个线程组中添加和运行。</p><br><p align="left">如果你的JMeter返回数据是乱码，解决办法是，在JMeter安装路径的bin目录下，打开文件jmeter.properties，把Sampleresult.default.encoding的值改为 utf-8 即可。</p><br><p>1. 普通的以key-value传参的get请求</p><br><p style="margin-left: 30px" align="left">e.g. 获取用户信息</p><br><p style="margin-left: 30px" align="left">添加http请求；填写服务器域名或IP；方法选GET；填写路径；添加参数；运行并查看结果。</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225330129-372754067.jpg" alt=""></p><br><p align="left">&nbsp;2.&nbsp;以Json串传参的post请求</p><br><p style="margin-left: 30px" align="left">e.g. 获取用户余额</p><br><p style="margin-left: 30px" align="left">添加http请求；填写服务器域名或IP；方法选POST；填写路径；在参数区域选Body Data标签；写入Json串参数，注意Json格式；运行并查看结果。</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225345269-1296866128.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">&nbsp;<strong><em>注意：</em></strong></p><br><p style="margin-left: 30px" align="left">Json传参时，往往参数相对复杂，规模较大，很多时候是Json串再嵌套Json串，在写入body的时候如果哪里格式不对会影响传参，而JMeter本身是不能对Json进行格式校验的（Postman可以进行简单的Json校验），我们可以借助这个网站来校验你的Json串的格式，<a href="http://www.bejson.com/" target="_blank" rel="noopener">www.bejson.com</a>&nbsp;再把确保格式正确的Json串填入body。</p><br><p align="left">&nbsp;</p><br><p align="left">3.&nbsp; 请求时需要http权限验证</p><br><p style="margin-left: 30px" align="left">e.g. 修改用户余额</p><br><p style="margin-left: 30px" align="left">添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225419457-454919193.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">添加授权管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP授权管理器；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225436941-1064560549.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">打开HTTP授权管理器，在基础URL添加路径；填写用户名、密码（接口文档会给出）；添加域即请求的服务器域名或IP；其他默认；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225451644-193260402.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">运行请求并查看结果。（该接口暂时有问题请求返回500，只要掌握需要权限验证的接口如何做就好）</p><br><p style="margin-left: 30px" align="left">&nbsp;</p><br><p align="left">4.&nbsp; 请求时需要添加请求标头</p><br><p style="margin-left: 30px" align="left">e.g. 获取用户信息2</p><br><p style="margin-left: 30px" align="left">添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225534504-41616633.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">添加HTTP信息头管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP信息头管理器；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225543629-461536406.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">打开HTTP信息头管理器，参照接口文档填写好header信息；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225552582-984163710.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">运行请求并查看结果。</p><br><p align="left">&nbsp;</p><br><p align="left">5.&nbsp; 请求时需要添加Cookie</p><br><p style="margin-left: 30px" align="left">e.g. 修改用户余额2</p><br><p style="margin-left: 30px" align="left">添加http请求；填写服务器域名或IP；方法选POST；填写路径；填写参数；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225627222-1524249088.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">添加HTTP Cookie管理器，右击线程组-&gt;添加-&gt;配置元件-&gt;HTTP Cookie管理器；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225637051-1210909906.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">打开Cookie管理器，参照接口文档填写好Cookie信息；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225646019-537903291.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">&nbsp;发送请求并查看结果。</p><br><p align="left">&nbsp;</p><br><p align="left">6.&nbsp; 请求通过某个接口上传文件</p><br><p style="margin-left: 30px" align="left">&nbsp;&nbsp;&nbsp; e.g.上传文件</p><br><p style="margin-left: 30px" align="left">&nbsp;&nbsp;&nbsp; 添加http请求；填写服务器域名或IP；方法选POST；填写路径；在参数区域选Files Upload标签，添加文件全名（包含绝对路径，也可以点击浏览按钮添加），写入参数名；发送请求并查看结果。</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225840926-2021945425.jpg" alt=""></p><br><p align="left">&nbsp;</p><br><p align="left">&nbsp;</p><br><p align="left"><strong>JMeter</strong><strong>的参数化</strong></p><br><p>1. 指定参数值</p><br><p style="margin-left: 30px" align="left">这种方法常用来解决线程组中多个请求共用相同的数据，比如我们以上所有请求都有相同的IP地址，当地址改变时可以一改全改。</p><br><p style="margin-left: 30px" align="left">添加用户定义的变量，右击线程组-&gt;添加-&gt;配置元件-&gt;用户定义的变量；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225913379-728621487.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">打开用户定义的变量，添加变量，写好名称和值；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225923988-22481925.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">脚本中用到该值的所有地方都可以引用这个变量名了，引用变量的格式为 ${变量名}；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225932004-913899852.jpg" alt=""></p><br><p>2. 借助函数生成参数</p><br><p style="margin-left: 30px">测试过程中，有时候数据不适合被指定，可选择借助函数来生成，以下是最常用的几种。</p><br><ul><br><li> &nbsp; &nbsp; 用函数生成随机数：（<strong>Random）</strong></li><br></ul><br><p style="margin-left: 60px" align="left">在Jmeter中点击 选项-&gt;函数助手对话框；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510225944394-1241273180.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">在弹出的对话框中选Random，填写随机数的范围，点击生成按钮，就看到你需要的字符串了；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230114176-402374455.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">尝试在请求中使用生成的随机数，把刚拷贝的字符串粘贴到请求的参数里；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230122144-2095661283.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">发送请求，查看请求中参数值的情况，参数生效了。</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230130582-739910983.jpg" alt=""></p><br><p align="left">&nbsp;</p><br><ul><br><li> &nbsp; &nbsp;用函数生成当前时间：（<strong>time）</strong></li><br></ul><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230144004-1075060714.jpg" alt=""></p><br><p align="left">&nbsp;</p><br><ul><br><li> &nbsp; &nbsp;用函数生成通用的唯一识别码：（UUID）</li><br></ul><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230201707-479016938.jpg" alt=""></p><br><p align="left">&nbsp;</p><br><p align="left">&nbsp;</p><br><p>3. 文件传参</p><br><p style="margin-left: 30px" align="left">用于读取在文件中维护的参数，如参数文件内容如下；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230217301-461996633.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">注意，Jmeter读取文件总的参数是从第一行就开始了的，千万不要犯下面的错误。</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230226941-1613343434.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">在Jmeter中右击线程组-&gt;添加-&gt;配置元件-&gt;CSV Data Set Config；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230237191-1519483740.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">打开设置窗口，写入参数文件的全名（含绝对路径），变量名，Delimiter就用默认的逗号，表示在准备参数文件时参数表的列之间用逗号隔开；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230251582-144227995.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">在请求中引用参数时应该是酱紫的：${username}&nbsp; ${pwd}，用它们来顶替对应的参数值。</p><br><p style="margin-left: 30px" align="left">&nbsp;</p><br><p align="left">4. 关联传参</p><br><p style="margin-left: 30px" align="left">在线程组内，当你想用一个请求的响应结果作为另一个请求的入参时就需要用到关联。</p><br><ul><br><li>用正则表达式关联</li><br></ul><br><p style="margin-left: 60px" align="left">思路是先从某个请求的响应数据中提取你需要的值，在把这个值在另一个请求中入参，操作如下：</p><br><p style="margin-left: 60px" align="left">在需要被提取响应数据的请求下添加正则表达式提取器，右击添加-&gt;后置处理器-&gt;正则表达式提取器；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230310082-1084910067.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">在正则表达式提取器中填写 引用名称，不说也知道用途；正则表达式，最简单的办法是在响应数据中把要提取的目标值左右若干字符包含目标值的一行拷贝出来，粘贴到正则表达式框内，在把目标值用一对小括号替换，括号里用添上合适的匹配符本例如(.)； 注意在响应数据中拷贝时尽量避开需要转义的字符如果不能避开，请转义；模板通常固定填$1$；匹配数字1代表区匹配的第一个值；缺省值是在匹配失败时取得的值，通常用来检查匹配是否成功；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230324566-180395352.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">用${age}入参给另一个请求，查看结果传参成功。</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230340629-1226134396.jpg" alt=""></p><br><p style="margin-left: 60px" align="left"><img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230348910-1017475744.jpg" alt=""></p><br><p align="left">&nbsp;</p><br><p align="left">&nbsp;</p><br><ul><br><li>用Json Path Extractor 插件关联</li><br></ul><br><p style="margin-left: 60px" align="left">只针对Json格式的Response 取值，右击请求添加-&gt;后置处理器-&gt;JSON Path Extractor；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230411066-302824063.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">在JSON Path Extractor中填入引用名和JSONPath Expression；</p><br><p style="margin-left: 60px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230419285-1629961254.jpg" alt=""></p><br><p style="margin-left: 60px" align="left">在另一个请求中入参，也和上面的结果一样转参成功。</p><br><p style="margin-left: 60px" align="left">注意，JSON Path Extractor这个插件只能在Jmeter3.x以上的版本安装。</p><br><p align="left">&nbsp;</p><br><p align="left"><strong>Jmeter</strong><strong>添加断言检查结果</strong></p><br><p style="margin-left: 30px" align="left">右击请求添加-&gt;断言-&gt;响应断言；</p><br><p style="margin-left: 30px" align="left"><strong><img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230442222-1670909701.jpg" alt="">&nbsp;</strong></p><br><p align="left">&nbsp;</p><br><p style="margin-left: 30px" align="left">添加并写入希望在响应结果中看到的内容；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230456972-1257602722.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">发送请求，查看结果；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230512097-145244588.jpg" alt=""></p><br><p align="left">&nbsp;<strong>Jmeter</strong><strong>操作Mysql</strong></p><br><p style="margin-left: 30px" align="left">测试计划添加.jar包 mysql-connector-java-5.1.7-bin.jar用于使Jmeter可以读取Mysql；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230532738-1848914125.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">&nbsp;线程组添加 JDBC Connection Configuration （添加-&gt;配置元件-&gt; JDBC Connection Configuration）用于配置Jmeter和Mysql的连接；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230603004-1726759098.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">JDBC Driver class是固定的，Jmeter操作各类数据的Driver参考下图；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230612441-833124659.jpg" alt="" width="422" height="315"></p><br><p style="margin-left: 30px" align="left">线程组添加JDBC Request（添加-&gt;Sampler-&gt; JDBC Request） 用于写sql来操作Mysql；</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230633769-91723840.jpg" alt=""></p><br><p style="margin-left: 30px" align="left">发送请求，成功访问Msql。</p><br><p style="margin-left: 30px" align="left">&nbsp;<img src="https://images2015.cnblogs.com/blog/1025008/201705/1025008-20170510230649785-1388309077.jpg" alt=""></p>
 
           
         
